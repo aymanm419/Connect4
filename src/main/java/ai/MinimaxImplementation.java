@@ -16,9 +16,10 @@ public class MinimaxImplementation implements MinimaxInterface{
         this.levelPenalty = levelPenalty;
     }
 
-    public void playNextMove(Board board) {
+    public int playNextMove(Board board) {
         maximize(board, 0, Double.MAX_VALUE);
         board.addChip(new Piece(Piece.PieceType.YELLOW), bestMove);
+        return bestMove;
     }
 
     private double maximize(Board board, int level, double minimumValue) {
