@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -29,7 +30,9 @@ public class HelloApplication extends Application {
         HBox statusBox=new HBox();
         statusBox.setSpacing(50);
         Label turn=new Label("Your Turn (◕ε◕)");
-        Label score=new Label("0");
+        turn.setFont(new Font(40));
+        Label score=new Label("Score: 0");
+        score.setFont(new Font(40));
         statusBox.getChildren().addAll(turn,score);
         HBox hBox = new HBox();
         hBox.setSpacing(5);
@@ -60,17 +63,17 @@ public class HelloApplication extends Application {
                 } else {
                     board.addChip(new Piece(Piece.PieceType.RED), col);
                     updateBoard(board,vBox,col);
-                    score.setText(String.valueOf(board.getBoardScore()));
+                    score.setText("Score: "+String.valueOf(board.getBoardScore()));
                     turn.setText("NOT YOUR TURN (◣_◢)");
                     //call ai play
                     //updateBoard(board,vBox,col);
                     turn.setText("YOUR TURN (◕ε◕)");
-                    score.setText(String.valueOf(board.getBoardScore()));
+                    score.setText("Score: "+String.valueOf(board.getBoardScore()));
                 }
             });
         }
         root.getChildren().addAll(statusBox,hBox);
-        Scene scene = new Scene(root, 800, 730);
+        Scene scene = new Scene(root, 800, 760);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
