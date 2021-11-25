@@ -55,13 +55,13 @@ public class HelloApplication extends Application {
                     board.addChip(new Piece(Piece.PieceType.RED),col);
                     for (int r=0;r<board.getBoard().get(col).size();r++)
                     {
-                        if(board.getBoard().get(r).get(col).equals(Piece.PieceType.RED))
+                        if(board.getBoard().get(col).get(r).equals(new Piece(Piece.PieceType.RED)))
                         {
-                            vBox.getChildren().get(r).setStyle("-fx-fill: red;");
+                            vBox.getChildren().get(vBox.getChildren().size()-1-r).setStyle("-fx-fill: red;");
                         }
-                        else if(board.getBoard().get(r).get(col).equals(Piece.PieceType.YELLOW))
+                        else if(board.getBoard().get(col).get(r).equals(new Piece(Piece.PieceType.YELLOW)))
                         {
-                            vBox.getChildren().get(r).setStyle("-fx-fill: yellow;");
+                            vBox.getChildren().get(vBox.getChildren().size()-1-r).setStyle("-fx-fill: yellow;");
                         }
                     }
                 }
