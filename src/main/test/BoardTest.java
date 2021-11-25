@@ -41,4 +41,14 @@ public class BoardTest {
         Assertions.assertEquals(listBoard.get(0).get(1), new Piece(Piece.PieceType.RED));
         Assertions.assertEquals(2, listBoard.get(0).size());
     }
+
+    @Test
+    public void testBoard() {
+        GameBoard board = new GameBoard(2, 1);
+        board.addChip(new Piece(Piece.PieceType.RED), 0);
+        board.addChip(new Piece(Piece.PieceType.YELLOW), 1);
+        List<List<Piece>> listBoard = board.getBoard();
+        Assertions.assertEquals(listBoard.get(0).get(0), new Piece(Piece.PieceType.RED));
+        Assertions.assertEquals(listBoard.get(1).get(0), new Piece(Piece.PieceType.YELLOW));
+    }
 }

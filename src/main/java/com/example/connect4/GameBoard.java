@@ -1,7 +1,6 @@
 package com.example.connect4;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class GameBoard implements Board {
@@ -10,7 +9,9 @@ public class GameBoard implements Board {
 
     public GameBoard(int columns, int rows) {
         this.rows = rows;
-        this.board = Collections.nCopies(columns, new ArrayList<>());
+        this.board = new ArrayList<>();
+        for (int i = 0; i < columns; i++)
+            this.board.add(new ArrayList<>());
     }
 
     @Override
