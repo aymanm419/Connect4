@@ -5,7 +5,7 @@ import java.util.Stack;
 
 public interface Board {
     List<List<Piece>> getBoard();
-    boolean isColumnEmpty(int col);
+    boolean isColumnHasSpace(int col);
     void addChip(Piece piece,int col);
     void removeChip(int col);
 }

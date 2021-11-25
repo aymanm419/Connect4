@@ -18,8 +18,7 @@ public class GameBoard implements Board {
         return this.board;
     }
 
-    @Override
-    public boolean isColumnEmpty(int col) {
+    public boolean isColumnHasSpace(int col) {
         if (col >= board.size() || col < 0)
             return true;
         return this.board.get(col).size() < rows;
@@ -27,14 +26,14 @@ public class GameBoard implements Board {
 
     @Override
     public void addChip(Piece piece, int col) {
-        if (col >= board.size() || !isColumnEmpty(col))
+        if (col >= board.size() || !isColumnHasSpace(col))
             return;
         this.board.get(col).add(piece);
     }
 
     @Override
     public void removeChip(int col) {
-        if (col >= board.size() || isColumnEmpty(col))
+        if (col >= board.size() || isColumnHasSpace(col))
             return;
         this.board.get(col).remove(this.board.get(col).size() - 1);
     }
