@@ -34,14 +34,14 @@ public class GameBoard implements Board {
 
     @Override
     public void addChip(Piece piece, int col) {
-        if (col >= board.size() || !isColumnHasSpace(col))
+        if (col >= board.size() || col < 0 || board.get(col).size() >= rows)
             return;
         this.board.get(col).add(piece);
     }
 
     @Override
     public void removeChip(int col) {
-        if (col >= board.size() || isColumnHasSpace(col))
+        if (col >= board.size() || col < 0 || board.get(col).size() <= 0)
             return;
         this.board.get(col).remove(this.board.get(col).size() - 1);
     }

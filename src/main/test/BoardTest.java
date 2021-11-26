@@ -36,12 +36,31 @@ public class BoardTest {
         Assertions.assertTrue(board.isColumnHasSpace(0));
         board.addChip(new Piece(Piece.PieceType.YELLOW), 0);
         Assertions.assertFalse(board.isColumnHasSpace(0));
+
+        Assertions.assertFalse(board.isColumnHasSpace(0));
         board.removeChip(0);
         Assertions.assertTrue(board.isColumnHasSpace(0));
         List<List<Piece>> listBoard = board.getBoard();
         Assertions.assertEquals(listBoard.get(0).get(0), new Piece(Piece.PieceType.RED));
         Assertions.assertEquals(listBoard.get(0).get(1), new Piece(Piece.PieceType.RED));
         Assertions.assertEquals(2, listBoard.get(0).size());
+        Assertions.assertTrue(board.isColumnHasSpace(0));
+
+        board.removeChip(0);
+        Assertions.assertEquals(listBoard.get(0).get(0), new Piece(Piece.PieceType.RED));
+        Assertions.assertEquals(1, listBoard.get(0).size());
+        Assertions.assertTrue(board.isColumnHasSpace(0));
+
+        board.removeChip(0);
+        Assertions.assertEquals(0, listBoard.get(0).size());
+        Assertions.assertTrue(board.isColumnHasSpace(0));
+
+        board.removeChip(0);
+        Assertions.assertEquals(0, listBoard.get(0).size());
+
+        board.addChip(new Piece(Piece.PieceType.RED), 0);
+        board.removeChip(0);
+        Assertions.assertEquals(0, listBoard.get(0).size());
     }
 
     @Test
