@@ -93,10 +93,9 @@ public class GameGUI extends Application {
                         node.setDisable(true);
                     }
                     //call ai play
-                    //ai.playNextMove(board);
+                    col=ai.playNextMove(board);
                     moves.getAndDecrement();
-                    System.out.println(moves);
-                    updateBoard(board,vBox,col);
+                    updateBoard(board, (VBox) hBox.getChildren().get(col),col);
                     score.setText("Score: "+String.valueOf(board.getBoardScore()));
                     turn.setText("YOUR TURN (◕ε◕)");
                     for(Node node:hBox.getChildren())

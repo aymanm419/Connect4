@@ -24,7 +24,7 @@ public class Menu extends Application {
         Button alphaBeta=new Button("Play with AlphaBeta");
         alphaBeta.setOnAction(e->{
             try {
-                gameGUI.starter(stage,7,3,true,0);
+                gameGUI.starter(stage,7,3,true,1);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -32,7 +32,7 @@ public class Menu extends Application {
         Button withoutAlphaBeta=new Button("Play without AlphaBeta");
         withoutAlphaBeta.setOnAction(e->{
             try {
-                gameGUI.starter(stage,7,3,false,0);
+                gameGUI.starter(stage,7,3,false,1);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
