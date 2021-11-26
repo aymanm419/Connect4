@@ -58,18 +58,23 @@ public class BoardFunctions {
     private double checkWindow(PT[][] boardArray, int row, int col,int dx,int dy, PT type) {
         int i = row, j = col;
         int elements = 0;
+        int elementOp = 0;
         for(int ct = 0; ct < 4; ct++) {
             if(!checkBound(i, j, boardArray.length, boardArray[0].length)) {
                 return 0;
             }
             if(boardArray[i][j] != type && boardArray[i][j] != PT.WHITE) {
-                return 0;
+                elementOp++;
             }
             if(boardArray[i][j] == type) {
                 elements++;
             }
             i += dx;
             j += dy;
+        }
+        if(elementOp > 0) {
+            if(elements > 1) return 0;
+            return elementOp * 10;
         }
         return elements == 4? 40 : elements * 3;
     }
