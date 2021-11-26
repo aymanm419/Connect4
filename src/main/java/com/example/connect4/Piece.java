@@ -35,6 +35,7 @@ public class Piece {
 
     public enum PieceType {
         RED,
-        YELLOW
+        YELLOW,
+        WHITE
     }
 }

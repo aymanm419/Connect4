@@ -14,4 +14,6 @@ public interface Board {
     Board cloneBoard();
 
     double getBoardScore();
+
+    double getMoveScore(Piece.PieceType type, int col);
 }

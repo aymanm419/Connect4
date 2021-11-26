@@ -2,32 +2,32 @@ package ai;
 import com.example.connect4.Board;
 import com.example.connect4.Piece;
 
+import java.util.List;
+
 public class MinimaxImplementation implements MinimaxInterface{
     private int cols;
     private int maxLevels;
     private boolean alphaBetaPruning;
     private double levelPenalty;
-    private BoardFunctions bf;
     private int bestMove = 0;
-    MinimaxTreeNode root;
+
     public MinimaxImplementation(int cols, int maxLevels, boolean alphaBetaPruning, double levelPenalty) {
         this.cols = cols;
         this.maxLevels = maxLevels;
         this.alphaBetaPruning = alphaBetaPruning;
         this.levelPenalty = levelPenalty;
-        bf = new BoardFunctions();
     }
 
     public int playNextMove(Board board) {
-        root = new MinimaxTreeNode();
+        MinimaxTreeNode root = new MinimaxTreeNode();
         root.setBoard(board);
-        root.setPt(Piece.PieceType.YELLOW);
-        maximize(board, 0, Double.MAX_VALUE, root, 0);
+        maximize(board, 0, Double.MAX_VALUE, root.getTree(), 0);
+        root.printTreeNode("", board);
         board.addChip(new Piece(Piece.PieceType.YELLOW), bestMove);
         return bestMove;
     }
 
-    private double maximize(Board board, int level, double minimumValue, MinimaxTreeNode node, double lastBoardReward) {
+    private double maximize(Board board, int level, double minimumValue, List<MinimaxTreeNode> tree, double lastBoardReward) {
         if(level == maxLevels) {
             return 0;
         }
@@ -39,15 +39,16 @@ public class MinimaxImplementation implements MinimaxInterface{
                 continue;
             }
             board.addChip(new Piece(Piece.PieceType.YELLOW), i);
-            MinimaxTreeNode child = node.createNode(i, Piece.PieceType.RED);
-            currentBoardReward = bf.getScore(board, BoardFunctions.PT.YELLOW, i);
-            nextMovesReward =  minimize(board, level+1, maxTotalReward, child, currentBoardReward);
+            MinimaxTreeNode node = new MinimaxTreeNode(i, Piece.PieceType.YELLOW);
+            tree.add(node);
+            currentBoardReward = board.getMoveScore(Piece.PieceType.YELLOW, i);
+            nextMovesReward =  minimize(board, level+1, maxTotalReward, node.getTree(), currentBoardReward);
             totalReward =  levelPenalty * nextMovesReward + currentBoardReward;
             if(totalReward > maxTotalReward && level == 0) {
                 bestMove = i;
             }
             maxTotalReward = Math.max(maxTotalReward, totalReward);
-            node.setReward(maxTotalReward);
+            node.setReward(totalReward);
             board.removeChip(i);
             if(alphaBetaPruning && maxTotalReward + lastBoardReward >= minimumValue) {
                 return maxTotalReward;
@@ -56,28 +57,29 @@ public class MinimaxImplementation implements MinimaxInterface{
         return maxTotalReward;
     }
 
-    private double minimize(Board board, int level, double maximumValue, MinimaxTreeNode node, double lastBoardReward) {
+    private double minimize(Board board, int level, double maximumValue, List<MinimaxTreeNode> tree, double lastBoardReward) {
         if(level == maxLevels) {
             return 0;
         }
-        double maxTotalReward = Double.MAX_VALUE;
+        double minTotalReward = Double.MAX_VALUE;
         for(int i = 0; i<cols; i++) {
             double totalReward, currentBoardReward, nextMovesReward;
             if(!board.isColumnHasSpace(i)) {
                 continue;
             }
             board.addChip(new Piece(Piece.PieceType.RED), i);
-            MinimaxTreeNode child = node.createNode(i, Piece.PieceType.YELLOW);
-            currentBoardReward = bf.getScore(board, BoardFunctions.PT.RED, i);
-            nextMovesReward = maximize(board, level+1, maxTotalReward, child, -1 * currentBoardReward);
+            MinimaxTreeNode node = new MinimaxTreeNode(i, Piece.PieceType.RED);
+            tree.add(node);
+            currentBoardReward = board.getMoveScore(Piece.PieceType.RED, i);
+            nextMovesReward = maximize(board, level+1, minTotalReward, node.getTree(), -1 * currentBoardReward);
             totalReward = levelPenalty * nextMovesReward - currentBoardReward;
-            maxTotalReward = Math.min(totalReward, maxTotalReward);
-            node.setReward(maxTotalReward);
+            minTotalReward = Math.min(totalReward, minTotalReward);
+            node.setReward(totalReward);
             board.removeChip(i);
-            if(alphaBetaPruning && maxTotalReward + lastBoardReward <= maximumValue) {
-                return maxTotalReward;
+            if(alphaBetaPruning && minTotalReward + lastBoardReward <= maximumValue) {
+                return minTotalReward;
             }
         }
-        return maxTotalReward;
+        return minTotalReward;
     }
 }
