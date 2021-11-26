@@ -69,7 +69,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.connect4/com.example.connect4.HelloApplication</mainClass>
+                            <mainClass>com.example.connect4/com.example.connect4.Menu</mainClass>
                         </configuration>
                     </execution>
                 </executions>
