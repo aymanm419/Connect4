@@ -15,5 +15,7 @@ public interface Board {
 
     double getBoardScore();
 
+    double getMoveScore(Piece.PieceType type, int col);
+
     void printBoard();
 }

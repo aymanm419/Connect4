@@ -11,7 +11,7 @@ public class MinimaxTreeNode {
     private int col;
     private Piece.PieceType pt;
     private Board board;
-    private List<MinimaxTreeNode> tree;
+    private List<MinimaxTreeNode> tree = new ArrayList<>();
 
     public Board getBoard() {
         return board;
@@ -31,7 +31,12 @@ public class MinimaxTreeNode {
     }
 
     public MinimaxTreeNode() {
-        tree = new ArrayList<>();
+
+    }
+
+    public MinimaxTreeNode(int col, Piece.PieceType pt) {
+        this.col = col;
+        this.pt = pt;
     }
 
     public double getReward() {
@@ -58,15 +63,25 @@ public class MinimaxTreeNode {
         this.pt = pt;
     }
 
-    public MinimaxTreeNode createNode(int col, Piece.PieceType pt) {
-        MinimaxTreeNode child = new MinimaxTreeNode();
-        child.setCol(col);
-        child.setPt(pt);
-        tree.add(child);
-        return child;
-    }
-
     public boolean isFinalLevel() {
         return tree.get(0).getTree().size() == 0;
+    }
+
+    void printTreeNode(String path, Board board) {
+        if(this.pt != null) {
+            System.out.println("------------------------------------------------------------------------------------------");
+            path += String.valueOf(col) + ' ';
+            System.out.println("Current path is " + path);
+            System.out.println("Piece of Color " + this.pt + " is inserted at Column " + this.col + " With Reward " + this.reward);
+            //print board
+            System.out.println();
+            board.addChip(new Piece(pt), col);
+        }
+        for (MinimaxTreeNode minimaxTreeNode : tree) {
+            minimaxTreeNode.printTreeNode(path, board);
+        }
+        if(this.pt != null) {
+            board.removeChip(col);
+        }
     }
 }
