@@ -34,7 +34,12 @@ public class Piece {
     }
 
     public enum PieceType {
-        RED,
-        YELLOW
+        RED("R"),
+        YELLOW("Y");
+        public final String symbol;
+
+        PieceType(String symbol) {
+            this.symbol = symbol;
+        }
     }
 }

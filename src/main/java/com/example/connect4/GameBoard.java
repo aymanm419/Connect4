@@ -88,4 +88,21 @@ public class GameBoard implements Board {
     public double getBoardScore() {
         return consecutiveFourCount();
     }
+
+    @Override
+    public void printBoard() {
+        System.out.println("=============== ");
+        for (int j = rows - 1; j >= 0; j--) {
+            System.out.print("|");
+            for (List<Piece> pieces : board) {
+                if (j < pieces.size())
+                    System.out.print(pieces.get(j).getType().symbol);
+                else
+                    System.out.print("E");
+                System.out.print("|");
+            }
+            System.out.println();
+        }
+        System.out.println("=============== ");
+    }
 }

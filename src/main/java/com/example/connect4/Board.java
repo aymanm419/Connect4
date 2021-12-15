@@ -14,4 +14,6 @@ public interface Board {
     Board cloneBoard();
 
     double getBoardScore();
+
+    void printBoard();
 }
