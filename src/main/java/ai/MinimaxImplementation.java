@@ -24,7 +24,10 @@ public class MinimaxImplementation implements MinimaxInterface{
     public int playNextMove(Board board) {
         MinimaxTreeNode root = new MinimaxTreeNode();
         root.setBoard(board);
+        long startTime = System.currentTimeMillis();
         maximize(board, 0, Double.MAX_VALUE, root.getTree(), 0);
+        long timeTaken = System.currentTimeMillis() - startTime;
+        System.out.println("Time taken for move is " + String.valueOf(timeTaken) + " Milliseconds");
         try {
             FileWriter fw = new FileWriter("tree.txt");
             root.printTreeNode("", board, fw);
