@@ -1,5 +1,7 @@
 package com.example.connect4;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -90,20 +92,20 @@ public class GameBoard implements Board {
     }
 
     @Override
-    public void printBoard() {
-        System.out.println("=============== ");
+    public void printBoard(FileWriter fw) throws IOException {
+        fw.write("=============== \n");
         for (int j = rows - 1; j >= 0; j--) {
-            System.out.print("|");
+            fw.write("|");
             for (List<Piece> pieces : board) {
                 if (j < pieces.size())
-                    System.out.print(pieces.get(j).getType().symbol);
+                    fw.write(pieces.get(j).getType().symbol);
                 else
-                    System.out.print("E");
-                System.out.print("|");
+                     fw.write("E");
+                fw.write("|");
             }
-            System.out.println();
+            fw.write("\n");
         }
-        System.out.println("=============== ");
+        fw.write("=============== ");
     }
 
 

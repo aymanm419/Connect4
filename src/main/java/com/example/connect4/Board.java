@@ -1,5 +1,7 @@
 package com.example.connect4;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 public interface Board {
@@ -17,5 +19,5 @@ public interface Board {
 
     double getMoveScore(Piece.PieceType type, int col);
 
-    void printBoard();
+    void printBoard(FileWriter fw) throws IOException;
 }

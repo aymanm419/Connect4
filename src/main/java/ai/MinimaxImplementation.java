@@ -2,6 +2,8 @@ package ai;
 import com.example.connect4.Board;
 import com.example.connect4.Piece;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class MinimaxImplementation implements MinimaxInterface{
@@ -18,11 +20,18 @@ public class MinimaxImplementation implements MinimaxInterface{
         this.levelPenalty = levelPenalty;
     }
 
+
     public int playNextMove(Board board) {
         MinimaxTreeNode root = new MinimaxTreeNode();
         root.setBoard(board);
         maximize(board, 0, Double.MAX_VALUE, root.getTree(), 0);
-        root.printTreeNode("", board);
+        try {
+            FileWriter fw = new FileWriter("tree.txt");
+            root.printTreeNode("", board, fw);
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("File Open Failed");
+        }
         board.addChip(new Piece(Piece.PieceType.YELLOW), bestMove);
         return bestMove;
     }

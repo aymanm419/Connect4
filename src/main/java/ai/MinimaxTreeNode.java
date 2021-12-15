@@ -3,6 +3,8 @@ package ai;
 import com.example.connect4.Board;
 import com.example.connect4.Piece;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,18 +69,23 @@ public class MinimaxTreeNode {
         return tree.get(0).getTree().size() == 0;
     }
 
-    void printTreeNode(String path, Board board) {
+    void printTreeNode(String path, Board board, FileWriter fw) {
         if(this.pt != null) {
-            System.out.println("------------------------------------------------------------------------------------------");
-            path += String.valueOf(col) + ' ';
-            System.out.println("Current path is " + path);
-            System.out.println("Piece of Color " + this.pt + " is inserted at Column " + this.col + " With Reward " + this.reward);
-            //print board
-            System.out.println();
+            try {
+                fw.write("------------------------------------------------------------------------------------------\n");
+                path += String.valueOf(col) + " ";
+                fw.write("Current path is " + path + "\n");
+                fw.write("Piece of Color " + this.pt + " is inserted at Column " + this.col + " With Reward " + this.reward + "\n");
+                board.printBoard(fw);
+                fw.write("\n");
+            } catch (IOException e) {
+                System.out.println("Tree Write Failed");
+            }
             board.addChip(new Piece(pt), col);
+
         }
         for (MinimaxTreeNode minimaxTreeNode : tree) {
-            minimaxTreeNode.printTreeNode(path, board);
+            minimaxTreeNode.printTreeNode(path, board, fw);
         }
         if(this.pt != null) {
             board.removeChip(col);
